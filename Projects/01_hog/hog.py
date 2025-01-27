@@ -180,7 +180,9 @@ def always_roll(n):
     """
     assert n >= 0 and n <= 10
     # BEGIN PROBLEM 6
-    "*** YOUR CODE HERE ***"
+    def strategy(score0, score1):
+        return n
+    return strategy
     # END PROBLEM 6
 
 
@@ -193,10 +195,11 @@ def catch_up(score, opponent_score):
     >>> strategy(17, 18)
     6
     """
-    if score < opponent_score:
-        return 6  # Roll one more to catch up
-    else:
+    def strategy(score, opponent_score):
+        if score < opponent_score:
+            return 6
         return 5
+    return strategy
 
 
 def is_always_roll(strategy, goal=GOAL):
@@ -211,7 +214,12 @@ def is_always_roll(strategy, goal=GOAL):
     False
     """
     # BEGIN PROBLEM 7
-    "*** YOUR CODE HERE ***"
+    first_roll = strategy(0, 0)
+    for score in range(goal):
+        for opponent_score in range(goal):
+            if strategy(score, opponent_score) != first_roll:
+                return False
+    return True
     # END PROBLEM 7
 
 
@@ -227,7 +235,12 @@ def make_averaged(original_function, times_called=1000):
     3.0
     """
     # BEGIN PROBLEM 8
-    "*** YOUR CODE HERE ***"
+    def averaged_dice(*args):
+        total = 0
+        for _ in range(times_called):
+            total += original_function(*args)
+        return total / times_called
+    return averaged_dice
     # END PROBLEM 8
 
 
@@ -240,7 +253,15 @@ def max_scoring_num_rolls(dice=six_sided, times_called=1000):
     1
     """
     # BEGIN PROBLEM 9
-    "*** YOUR CODE HERE ***"
+    max_average = 0
+    best_dice = 0
+    for num_roll in range(1, 11):
+        averaged_roll = make_averaged(roll_dice, times_called)
+        average_score = averaged_roll(num_roll, dice)
+        if average_score > max_average:
+            max_average = average_score
+            best_dice = num_roll
+    return best_dice
     # END PROBLEM 9
 
 
